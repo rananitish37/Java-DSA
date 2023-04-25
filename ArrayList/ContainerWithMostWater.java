@@ -6,20 +6,19 @@ import java.util.Arrays;
 public class ContainerWithMostWater {
     static int water=0;
     public static void calculate(ArrayList<Integer> list){
-        for(int i=0;i<list.size();i++){
-            for(int j=i+1;j<list.size();j++){
-                int width=j-i;
-                int height;
-                if(list.get(i)<list.get(j)){
-                    height=list.get(i);
-                }else{
-                    height=list.get(j);
-                }
-                int currWater=height*width;
-                if (water < currWater) {
-                    water=currWater;
-                }
-            }        
+        int i=0,j=list.size()-1;
+        while(i<j){
+            int width=j-i;
+            int height=Math.min(list.get(i), list.get(j));
+            int currwater=width*height;
+            if(currwater>water){
+                water=currwater;
+            }
+            if(list.get(i)<list.get(j)){
+                i++;
+            }else{
+                j--;
+            }
         }
     }
     public static int maxArea(int[] height) {
@@ -42,9 +41,9 @@ public class ContainerWithMostWater {
     }
     public static void main(String[] args) {
         ArrayList<Integer> list=new ArrayList<>(Arrays.asList(1,8,6,2,5,4,8,3,7));
-        // calculate(list);
-        // System.out.println(water);
+        calculate(list);
+        System.out.println("using arraylist: "+water);
         int[] height={1,8,6,2,5,4,8,3,7};
-        System.out.println(maxArea(height));
+        System.out.println("using array: "+maxArea(height));
     }
 }
