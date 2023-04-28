@@ -1,5 +1,7 @@
 package LinkedList;
 
+import javax.swing.text.StyledEditorKit.BoldAction;
+
 public class intro {
     public class Node{
         int data;
@@ -209,14 +211,46 @@ public class intro {
         }
         return false;
     }
+    //Removing cycle from linked list
+    public static void removeCycle(Node head){
+        Node slow=head;
+        Node fast=head;
+        boolean cycle=false;
+        while(fast!=null && fast.next!=null){
+            slow=slow.next;
+            fast=fast.next.next;
+            if(fast==slow){
+                cycle=true;
+                break;
+            }
+        }
+        if(cycle==false){
+            return;
+        }
+        slow=head;
+        Node prev=null;
+        while(slow!=fast){
+            prev=fast;
+            slow=slow.next;
+            fast=fast.next;
+        }
+        prev.next=null;
+    }
     public static void main(String[] args) {
         intro ll=new intro();
         head=ll.new Node(1);
         head.next=ll.new Node(2);
-        head.next.next=ll.new Node(3);
-        head.next.next.next=head;
+        Node temp=ll.new Node(3);
+        head.next.next=temp;
+        head.next.next.next=ll.new Node(4);
+        head.next.next.next.next=temp;
+
         // ll.printList();
         System.out.println(ll.detectCycle(head));
+        System.out.println("=========removing cycle=========");
+        ll.removeCycle(head);
+        System.out.println(ll.detectCycle(head));
+        ll.printList();
     }
     // public static void main(String[] args) {
         // intro ll=new intro();
