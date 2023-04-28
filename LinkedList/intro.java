@@ -1,7 +1,7 @@
 package LinkedList;
 
 public class intro {
-    class Node{
+    public class Node{
         int data;
         Node next;
         public Node(int data){
@@ -156,19 +156,76 @@ public class intro {
         prev.next = prev.next.next;
         return head;
     }
+    //check palindrome
+    //find mid first
+    public Node findMid(Node head){
+        Node slow=head;
+        Node fast=head;
+        while(fast!=null && fast.next!=null){
+            fast=fast.next.next;//+2
+            slow=slow.next;//+1
+        }
+        return slow;
+    }
+    //checking palindrome
+    public boolean checkPalindrome(){
+        if(head==null || head.next==null){
+            return true;
+        }
+        Node mid=findMid(head);
+
+        Node prev=null;
+        Node curr=mid;
+        Node next;
+        while(curr!=null){
+            next=curr.next;
+            curr.next=prev;
+            prev=curr;
+            curr=next;
+        }
+
+        Node right=prev;
+        Node left=head;
+        while(right!=null){
+            if(left.data!=right.data){
+                return false;
+            }
+            left=left.next;
+            right=right.next;
+        }
+        return true;
+
+    }
+    //Detect a loop/cycle in Linked List(cycle Finding algorithm Floyd's algorithm)
+    public boolean detectCycle(Node head){
+        Node slow=head;
+        Node fast=head;
+        while(fast!=null && fast.next!=null){
+            slow=slow.next;
+            fast=fast.next.next;
+            if(slow==fast){
+                return true;
+            }
+        }
+        return false;
+    }
     public static void main(String[] args) {
         intro ll=new intro();
-        ll.printList();
-        ll.addFirst(2);
-        ll.printList();
-        ll.addFirst(1);
-        ll.printList();
-        ll.addLast(4);
-        ll.printList();
-        ll.addLast(5);
-        ll.printList();
-        ll.addMidle(2, 3);
-        ll.printList();
+        head=ll.new Node(1);
+        head.next=ll.new Node(2);
+        head.next.next=ll.new Node(3);
+        head.next.next.next=head;
+        // ll.printList();
+        System.out.println(ll.detectCycle(head));
+    }
+    // public static void main(String[] args) {
+        // intro ll=new intro();
+        // ll.addFirst(2);
+        // ll.addFirst(1);
+        // ll.addLast(2);
+        // ll.addLast(1);
+        // ll.addMidle(2, 3);
+        // ll.printList();
         // System.out.println("size: "+size);
         // int val=ll.removeFirst();
         // System.out.println(val+" is deleted from list");
@@ -177,6 +234,11 @@ public class intro {
         // ll.removeLast();
         // ll.printList();
         // ll.eleSearch(4);
-        System.out.println(ll.recSearch(4));
-    }
+        // System.out.println(ll.recSearch(4));
+
+        // System.out.println(ll.checkPalindrome());
+
+       
+    // }
+    
 }
