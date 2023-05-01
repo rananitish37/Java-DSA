@@ -1,7 +1,5 @@
 package LinkedList;
 
-import javax.swing.text.StyledEditorKit.BoldAction;
-
 public class intro {
     public class Node{
         int data;
@@ -236,22 +234,23 @@ public class intro {
         }
         prev.next=null;
     }
-    public static void main(String[] args) {
-        intro ll=new intro();
-        head=ll.new Node(1);
-        head.next=ll.new Node(2);
-        Node temp=ll.new Node(3);
-        head.next.next=temp;
-        head.next.next.next=ll.new Node(4);
-        head.next.next.next.next=temp;
+    // public static void main(String[] args) {
+    //main function for remove and detect cycle
+    //     intro ll=new intro();
+    //     head=ll.new Node(1);
+    //     head.next=ll.new Node(2);
+    //     Node temp=ll.new Node(3);
+    //     head.next.next=temp;
+    //     head.next.next.next=ll.new Node(4);
+    //     head.next.next.next.next=temp;
 
-        // ll.printList();
-        System.out.println(ll.detectCycle(head));
-        System.out.println("=========removing cycle=========");
-        ll.removeCycle(head);
-        System.out.println(ll.detectCycle(head));
-        ll.printList();
-    }
+    //     // ll.printList();
+    //     System.out.println(ll.detectCycle(head));
+    //     System.out.println("=========removing cycle=========");
+    //     ll.removeCycle(head);
+    //     System.out.println(ll.detectCycle(head));
+    //     ll.printList();
+    // }
     // public static void main(String[] args) {
         // intro ll=new intro();
         // ll.addFirst(2);
@@ -275,4 +274,101 @@ public class intro {
        
     // }
     
+    //merged sort using linked list
+    private Node findMidNode(Node head){
+        Node slow=head;
+        Node fast=head.next;
+        while(fast!=null && fast.next!=null){
+            fast=fast.next.next;//+2
+            slow=slow.next;//+1
+        }
+        return slow;
+    }
+    public Node mergedSort(Node head){
+        if(head==null || head.next==null){
+            return head;
+        }
+    //find mid
+        Node mid=findMid(head);
+    
+    //divide
+        Node rightHead=mid.next;
+        mid.next=null;
+        Node newLeft=mergedSort(head);
+        Node newRight=mergedSort(rightHead);
+    //merge
+        return merge(newLeft,newRight);
+    }
+    private Node merge(Node head1,Node head2){
+        Node mergedLL=new Node(-1);
+        Node temp=mergedLL;
+        while(head1!=null && head2!=null){
+            if(head1.data<=head2.data){
+                temp.next=head1;
+                head1=head1.next;
+                temp=temp.next;
+            }else{
+                temp.next=head2;
+                head2=head2.next;
+                temp=temp.next;
+            }
+        }
+        while(head1!=null){
+            temp.next=head1;
+            head1=head1.next;
+            temp=temp.next;
+        }
+        while(head2!=null){
+            temp.next=head2;
+            head2=head2.next;
+            temp=temp.next;
+        }
+        return mergedLL.next;
+    }
+    //zigzag LL
+    public Node zigZag(Node head){
+        //find mid
+        Node mid=findMidNode(head);
+
+        //reverse the second half
+        Node curr=mid.next;
+        mid.next=null;
+        Node prev=null;
+        Node next;
+        while(curr!=null){
+            next=curr.next;
+            curr.next=prev;
+            prev=curr;
+            curr=next;
+        }
+        //merging
+        Node leftHead=head;
+        Node rightHead=prev;
+        Node nextL;
+        Node nextR;
+        while(head!=null && rightHead!=null){
+            nextL=leftHead.next;
+            leftHead.next=rightHead;
+            nextR=rightHead.next;
+            rightHead.next=nextL;
+            rightHead=nextR;
+            leftHead=nextL;
+        }
+        return head;
+    }
+    public static void main(String[] args) {
+        
+        intro ll=new intro();
+        ll.addFirst(6);
+        ll.addFirst(5);
+        ll.addFirst(4);
+        ll.addFirst(3);
+        ll.addFirst(2);
+        ll.addFirst(1);
+        ll.printList();
+
+        ll.zigZag(head);
+        // ll.head=ll.mergedSort(ll.head);
+        ll.printList();
+    }
 }
