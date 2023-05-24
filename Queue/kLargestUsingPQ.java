@@ -2,7 +2,7 @@ import java.util.*;
 public class kLargestUsingPQ {
     static int[] kLargest(int[] arr, int n, int k) {
         // code here
-        PriorityQueue<Integer> pq=new PriorityQueue<>();
+        PQueue<Integer> pq=new PQueue<>();
         for(int i=0;i<n;i++){
             if(i<k){
                 pq.add(arr[i]);
