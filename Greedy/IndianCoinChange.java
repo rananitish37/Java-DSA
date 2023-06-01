@@ -6,7 +6,7 @@ import java.util.Arrays;
 
 public class IndianCoinChange {
     public static void main(String[] args) {
-        int amount=590;
+        int amount=59042;
         int []coins={1,2,5,10,20,50,100,500,2000};
         int count=0;
         ArrayList<Integer> ans=new ArrayList<>();
