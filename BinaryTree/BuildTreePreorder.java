@@ -24,11 +24,19 @@ public class BuildTreePreorder {
 
             return newNode;
         }
+        public static int height(Node root){
+            if(root==null){
+                return 0;
+            }
+            int lh=height(root.left);
+            int rh=height(root.right);
+            return Math.max(lh, rh)+1;
+        }
     }
     public static void main(String[] args) {
-        int []nodes={1,2,4,-1,-1,5,-1,-1,3,-1,6,-1,-1};
+        int []nodes={1,2,4,-1,-1,5,-1,-1,3,-1,6,-1,7,-1,-1};
         BuildTree tree=new BuildTree();
         Node root=tree.buildTree(nodes);
-        System.out.println(root.data);
+        System.out.println(tree.height(root));
     }
 }
