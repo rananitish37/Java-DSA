@@ -1,5 +1,7 @@
 package BinaryTree;
 
+import org.w3c.dom.Node;
+
 public class BuildTreePreorder {
     static class Node{
         int data;
@@ -32,11 +34,29 @@ public class BuildTreePreorder {
             int rh=height(root.right);
             return Math.max(lh, rh)+1;
         }
+        public static int countNodes(Node root){
+            if(root==null){
+                return 0;
+            }
+            int lCount=countNodes(root.left);
+            int rCount=countNodes(root.right);
+            return lCount+rCount+1;
+        }
+        public static int totalSum(Node root){
+            if(root==null){
+                return 0;
+            }
+            int lSum=totalSum(root.left);
+            int rSum=totalSum(root.right);
+            return lSum+rSum+root.data;
+        }
     }
     public static void main(String[] args) {
         int []nodes={1,2,4,-1,-1,5,-1,-1,3,-1,6,-1,7,-1,-1};
         BuildTree tree=new BuildTree();
         Node root=tree.buildTree(nodes);
-        System.out.println(tree.height(root));
+        System.out.println("height of tree: "+tree.height(root));
+        System.out.println("total nodes in tree: "+tree.countNodes(root));
+        System.out.println("Sum of nodes: "+tree.totalSum(root));
     }
 }
