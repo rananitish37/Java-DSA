@@ -1,6 +1,10 @@
 package BinaryTree;
 
+import java.util.*;
+
 import org.w3c.dom.Node;
+
+import BinaryTree.BuildTreePreorder.BuildTree;
 
 public class BuildTreePreorder {
     static class Node{
@@ -63,8 +67,53 @@ public class BuildTreePreorder {
             return Math.max(selfDiam,Math.max(leftDiam, rightDiam));            
         }
     }
+    static class Info{
+        Node node;
+        int hd;
+        public Info(Node nod, int hd){
+            this.node=node;
+            this.hd=hd;
+        }
+    }
+    static ArrayList<Integer> topView(Node root)
+    {
+        // add your code
+        ArrayList<Integer> res=new ArrayList<>();
+        Queue<Info> q=new LinkedList<>();
+        HashMap<Integer,Node> map=new HashMap<>();
+        int min=0,max=0;
+        q.add(new Info(root,0));
+        q.add(null);
+        while(!q.isEmpty()){
+            Info curr=q.remove();
+            if(curr==null){
+                if(q.isEmpty()){
+                    break;
+                }else{
+                    q.add(null);
+                }
+            }else{
+                 if(!map.containsKey(curr.hd)){
+            map.put(curr.hd,curr.node);
+        }
+        if(curr.node.left!=null){
+            q.add(new Info(curr.node.left,curr.hd-1));
+            min=Math.min(min,curr.hd-1);
+        }
+        if(curr.node.right!=null){
+            q.add(new Info(curr.node.right,curr.hd-1));
+            max=Math.max(max,curr.hd+1);
+        }
+            }
+        }
+       
+        for(int i=min;i<=max;i++){
+            res.add(map.get(i).data);
+        }
+        return res;
+    }
     public static void main(String[] args) {
-        int []nodes={1,2,4,-1,-1,5,-1,-1,3,-1,6,-1,7,-1,-1};
+        int []nodes={1,2,4,-1,-1,5,-1,-1,3,6,-1,-1,7,-1,-1};
         /*
             1
            / \
@@ -74,9 +123,10 @@ public class BuildTreePreorder {
          */
         BuildTree tree=new BuildTree();
         Node root=tree.buildTree(nodes);
-        System.out.println("height of tree: "+tree.height(root));
-        System.out.println("total nodes in tree: "+tree.countNodes(root));
-        System.out.println("Sum of nodes: "+tree.totalSum(root));
-        System.out.println("Diameter: "+tree.diameter(root));
+        // System.out.println("height of tree: "+tree.height(root));
+        // System.out.println("total nodes in tree: "+tree.countNodes(root));
+        // System.out.println("Sum of nodes: "+tree.totalSum(root));
+        // System.out.println("Diameter: "+tree.diameter(root));
+        System.out.println("Diameter: "+topView(root));
     }
 }
