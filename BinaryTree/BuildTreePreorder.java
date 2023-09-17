@@ -2,6 +2,8 @@ package BinaryTree;
 
 import java.util.*;
 
+import javax.sound.midi.Soundbank;
+
 import org.w3c.dom.Node;
 
 import BinaryTree.BuildTreePreorder.BuildTree;
@@ -112,6 +114,50 @@ public class BuildTreePreorder {
         }
         return res;
     }
+
+    public static void kthLevel(Node root,int level,int k){
+        if(root==null){
+            return;
+        }
+        if(level==k){
+            System.out.print(root.data+" ");
+            return;
+        }
+        kthLevel(root.left, level+1, k);
+        kthLevel(root.right, level+1, k);
+    }
+    public static boolean getPath(Node root,int n,ArrayList<Node> path){
+        if(root==null){
+            return false;
+        }
+        path.add(root);
+        if(root.data==n){
+            return true;
+        }
+        boolean leftVal=getPath(root.left, n, path);
+        boolean rightVal=getPath(root.right, n, path);
+        
+        if(leftVal || rightVal){
+            return true;
+        }
+        path.remove(path.size()-1);
+        return false;
+    }
+    public static int LowestCommonAncestor(Node root,int n1,int n2){
+        ArrayList<Node> path1=new ArrayList<>();
+        ArrayList<Node> path2=new ArrayList<>();
+        getPath(root,n1,path1);
+        getPath(root,n2,path2);
+        //last common ancestor
+        int i=0;
+        for(;1<path1.size() && 1<path2.size();i++){
+            if(path1.get(i) != path2.get(i)){
+                break;
+            }
+        }
+        //last qual node
+        return path1.get(i-1).data;
+    }
     public static void main(String[] args) {
         int []nodes={1,2,4,-1,-1,5,-1,-1,3,6,-1,-1,7,-1,-1};
         /*
@@ -127,6 +173,8 @@ public class BuildTreePreorder {
         // System.out.println("total nodes in tree: "+tree.countNodes(root));
         // System.out.println("Sum of nodes: "+tree.totalSum(root));
         // System.out.println("Diameter: "+tree.diameter(root));
-        System.out.println("Diameter: "+topView(root));
+        // System.out.println("Diameter: "+topView(root));
+        // kthLevel(root, 1, 3);
+        System.out.println(LowestCommonAncestor(root,4,5));
     }
 }
