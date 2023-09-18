@@ -114,7 +114,6 @@ public class BuildTreePreorder {
         }
         return res;
     }
-
     public static void kthLevel(Node root,int level,int k){
         if(root==null){
             return;
@@ -143,7 +142,7 @@ public class BuildTreePreorder {
         path.remove(path.size()-1);
         return false;
     }
-    public static int LowestCommonAncestor(Node root,int n1,int n2){
+    public static Node LowestCommonAncestor(Node root,int n1,int n2){
         ArrayList<Node> path1=new ArrayList<>();
         ArrayList<Node> path2=new ArrayList<>();
         getPath(root,n1,path1);
@@ -156,7 +155,30 @@ public class BuildTreePreorder {
             }
         }
         //last qual node
-        return path1.get(i-1).data;
+        return path1.get(i-1);
+    }
+    public static int distLCA(Node root,int n){
+        if(root==null){
+            return -1;
+        }
+        if(root.data==n){
+            return 0;
+        }
+        int leftDist=distLCA(root.left, n);
+        int rightDist=distLCA(root.right, n);
+        if(leftDist==-1 && rightDist ==-1){
+            return -1;
+        }else if(leftDist==-1){
+            return rightDist+1;
+        }else{
+            return leftDist+1;
+        }
+    }
+    public static int minDist(Node root,int n1,int n2){
+        Node lca=LowestCommonAncestor(root, n1, n2);
+        int dist1=distLCA(root, n1);
+        int dist2=distLCA(root, n2);
+        return dist1+dist2;
     }
     public static void main(String[] args) {
         int []nodes={1,2,4,-1,-1,5,-1,-1,3,6,-1,-1,7,-1,-1};
@@ -175,6 +197,7 @@ public class BuildTreePreorder {
         // System.out.println("Diameter: "+tree.diameter(root));
         // System.out.println("Diameter: "+topView(root));
         // kthLevel(root, 1, 3);
-        System.out.println(LowestCommonAncestor(root,4,5));
+        // System.out.println(LowestCommonAncestor(root,4,5).data);
+        System.out.println(minDist(root, 4, 5));
     }
 }
