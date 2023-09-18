@@ -180,8 +180,37 @@ public class BuildTreePreorder {
         int dist2=distLCA(root, n2);
         return dist1+dist2;
     }
+
+    public static int kAncenstor(Node root,int k,int node){
+        if(root==null){
+            return -1;
+        }
+        if(root.data==node){
+            return 0;
+        }
+        int leftDiff=kAncenstor(root.left,k,node);
+        int rightDiff=kAncenstor(root.right,k,node);
+        
+        if(leftDiff==-1 && rightDiff==-1){
+            return -1;
+        }
+        int max=Math.max(leftDiff,rightDiff);
+        if(max+1==k){
+            System.out.println(root.data);
+        }
+        return max+1; 
+    }
     public static void main(String[] args) {
-        int []nodes={1,2,4,-1,-1,5,-1,-1,3,6,-1,-1,7,-1,-1};
+        // int []nodes={1,2,4,-1,-1,5,-1,-1,3,6,-1,-1,7,-1,-1};
+         // BuildTree tree=new BuildTree();
+        // Node root=tree.buildTree(nodes);
+        Node root=new Node(1);
+        root.left=new Node(2);
+        root.right=new Node(3);
+        root.left.left=new Node(4);
+        root.left.right=new Node(5);
+        root.right.left=new Node(6);
+        root.right.right=new Node(7);
         /*
             1
            / \
@@ -189,8 +218,7 @@ public class BuildTreePreorder {
          / \ / \
         4  5 6  7
          */
-        BuildTree tree=new BuildTree();
-        Node root=tree.buildTree(nodes);
+       
         // System.out.println("height of tree: "+tree.height(root));
         // System.out.println("total nodes in tree: "+tree.countNodes(root));
         // System.out.println("Sum of nodes: "+tree.totalSum(root));
@@ -198,6 +226,7 @@ public class BuildTreePreorder {
         // System.out.println("Diameter: "+topView(root));
         // kthLevel(root, 1, 3);
         // System.out.println(LowestCommonAncestor(root,4,5).data);
-        System.out.println(minDist(root, 4, 5));
+        // System.out.println(minDist(root, 4, 5));
+        kAncenstor(root, 1, 4);
     }
 }
