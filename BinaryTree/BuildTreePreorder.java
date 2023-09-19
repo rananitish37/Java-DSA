@@ -200,9 +200,31 @@ public class BuildTreePreorder {
         }
         return max+1; 
     }
+    public static Node findInvert(Node root){
+        if(root==null){
+            return root;
+        }
+        Node left=findInvert(root.left);
+        Node right=findInvert(root.right);
+
+        //swap
+        root.left=right;
+        root.right=left;
+
+        return root;
+    }
+    public static void print(Node root){
+        if(root==null){
+            System.out.print("-1 ");
+            return;
+        }
+        System.out.print(root.data+" ");
+        print(root.left);
+        print(root.right);
+    }
     public static void main(String[] args) {
         // int []nodes={1,2,4,-1,-1,5,-1,-1,3,6,-1,-1,7,-1,-1};
-         // BuildTree tree=new BuildTree();
+         BuildTree tree=new BuildTree();
         // Node root=tree.buildTree(nodes);
         Node root=new Node(1);
         root.left=new Node(2);
@@ -227,6 +249,9 @@ public class BuildTreePreorder {
         // kthLevel(root, 1, 3);
         // System.out.println(LowestCommonAncestor(root,4,5).data);
         // System.out.println(minDist(root, 4, 5));
-        kAncenstor(root, 1, 4);
+        // kAncenstor(root, 1, 4);
+        // print(root);
+        root=findInvert(root);
+        print(root);
     }
 }
