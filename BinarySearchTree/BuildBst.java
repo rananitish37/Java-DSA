@@ -28,6 +28,18 @@ public class BuildBst{
         System.out.print(root.data+" ");
         printTree(root.right);
     }
+    public static boolean Search(Node root,int key){
+        if(root==null){
+            return false;
+        }
+        if(root.data==key){
+            return true;
+        }else if(root.data>key){
+            return Search(root.left, key);
+        }else{
+            return Search(root.right, key);
+        }
+    }
     public static void main(String[] args) {
         int val[]={1,2,5,7,3,9};
         Node root=null;
@@ -36,5 +48,12 @@ public class BuildBst{
             root=insert(root, val[i]);
         }
         printTree(root);
+        if(Search(root, 3)){
+            System.out.println("found");
+        }else{
+            System.out.println("Not found");
+        }
+        
+        
     }
 }
