@@ -9,9 +9,9 @@ class BoundaryOfMatrix
             {5, 6, 7, 8},
             {9, 10, 11, 12},
             {13, 14, 15,16}};
-            //o/p=1 2 3 4 8 12 16 15 14 13 9 5
-            int n =a.length;
-            int m =a[0].length;
+
+            int n =4;
+            int m =4;
             Solution ob = new Solution();
             ArrayList<Integer> ans = ob.boundaryTraversal(a, n, m);
             for (int i : ans) {
