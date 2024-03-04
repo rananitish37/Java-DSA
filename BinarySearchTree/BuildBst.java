@@ -71,6 +71,23 @@ public class BuildBst{
         }
         return root;
     }
+
+    //print in range
+    public static void printInRange(Node root, int k1, int k2){
+        if(root == null){
+            return;
+        }
+        if(root.data >= k1 && root.data <= k2){
+            printInRange(root.right, k1, k2);
+            System.out.print(root.data+" ");
+            printInRange(root.left, k1, k2);
+        }else if (root.data < k1) {
+            printInRange(root.right, k1, k2);
+        }else{
+            printInRange(root.left, k1, k2);
+        }
+        
+    }
     public static void main(String[] args) {
         int val[]={8,5,3,1,4,6,10,11,14};
         Node root=null;
@@ -78,15 +95,18 @@ public class BuildBst{
         for(int i=0;i<val.length;i++){
             root=insert(root, val[i]);
         }
-        printTree(root);
+        // printTree(root);
         // if(search(root, 10)){
         //     System.out.println("found");
         // }else{
         //     System.out.println("Not found");
         // }
         //DELETE A NODE
-        deleteNode(root, 5);
-        System.out.println();
-        printTree(root);
+        // deleteNode(root, 5);
+        // System.out.println();
+        // printTree(root);
+
+        //PRINT IN RANGE
+        printInRange(root, 2,8);
     }
 }
