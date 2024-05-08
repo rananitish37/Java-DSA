@@ -107,6 +107,8 @@ public class BuildBst{
         // printTree(root);
 
         //PRINT IN RANGE
-        printInRange(root, 2,8);
+        // printInRange(root, 2,8);
+
+        //PRINT ALL PATH FROM ROOT TO LEAF
     }
 }
